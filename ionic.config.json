@@ -1,0 +1,8 @@
+{
+  "name": "Bank app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue",
+  "id": "677c41bd"
+}
