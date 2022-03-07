@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
+import VueFeather from 'vue-feather';
 
 import { IonicVue } from '@ionic/vue';
 
@@ -22,11 +23,14 @@ import '@ionic/vue/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import './theme/fonts.css';
 
 const app = createApp(App)
   .use(IonicVue)
   .use(router);
-  
+
+app.component(VueFeather.name, VueFeather);
+
 router.isReady().then(() => {
   app.mount('#app');
 });
