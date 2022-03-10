@@ -13,8 +13,9 @@
                     <li><a href="#">2</a></li>
                     <li><a href="#">3</a></li>
                   </ul>
-                  <ion-button fill="clear"  router-link="/tabs/tab1" router-direction="forward">
-                    Start Now  <vue-feather type="arrow-right"></vue-feather>
+                  <ion-button fill="clear" router-link="/tabs/tab1" router-direction="forward">
+                    Start Now
+                    <vue-feather type="arrow-right"></vue-feather>
                   </ion-button>
                 </div>
               </div>
@@ -27,18 +28,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 import {IonPage, IonContent, IonGrid, IonRow, IonCol, IonButton} from '@ionic/vue';
 
 export default defineComponent({
   name: 'OnboardingPage',
-  components: { IonContent, IonPage, IonGrid, IonRow, IonCol, IonButton },
+  components: {IonContent, IonPage, IonGrid, IonRow, IonCol, IonButton},
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
 ion-content {
   --background: center / cover no-repeat url("../../resources/images/Bank-app__onboarding@2x.png") fixed;
 }
+
 ion-button {
   --color: #fff;
   text-transform: none;
@@ -49,50 +51,74 @@ ion-button {
   line-height: 27px;
   text-decoration: none;
 }
-.onboarding a i {
-  vertical-align: middle;
-}
+
 ion-grid, ion-row {
   height: 100%;
 }
+
+a i {
+  vertical-align: middle;
+}
+
 .onboarding {
   padding: 36px;
+
+  &__title {
+    font-family: Frank Ruhl Libre;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 58px;
+    line-height: 72px;
+    color: #ffffff;
+    margin-bottom: 40px;
+  }
+
+  &__nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    &__bullets {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+        height: 12px;
+        width: 12px;
+        margin-right: 12px;
+        border-radius: 50%;
+        background-color: #ffffff;
+        opacity: 0.3;
+        display: inline-block;
+
+        &.active {
+          background-color: $color-flamingo;
+          opacity: 1;
+        }
+
+        a {
+          display: none;
+        }
+      }
+    }
+  }
+
+  a {
+    font-family: $font-circular;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 27px;
+    color: #ffffff;
+    text-decoration: none;
+
+    i {
+      vertical-align: middle;
+    }
+  }
 }
-.onboarding__title {
-  font-family: Frank Ruhl Libre;
-  font-style: normal;
-  font-weight: 900;
-  font-size: 58px;
-  line-height: 72px;
-  color: #fff;
-  margin-bottom: 40px;
-}
-.onboarding__nav {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-}
-.onboarding__nav__bullets {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.onboarding__nav__bullets li {
-  height: 12px;
-  width: 12px;
-  margin-right: 12px;
-  border-radius: 50%;
-  background-color: #fff;
-  opacity: 0.3;
-  display: inline-block;
-}
-.onboarding__nav__bullets li.active {
-  background-color: #f26014;
-  opacity: 1;
-}
-.onboarding__nav__bullets li a {
-  display: none;
-}
+
 
 </style>

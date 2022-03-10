@@ -1,18 +1,17 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-
       <div class="dashboard">
         <div class="dashboard__top">
-          <div class="nav">
+          <div class="nav" >
             <ion-button fill="clear"  router-link="/" router-direction="back">
               <vue-feather type="home"></vue-feather>
             </ion-button>
           </div>
         </div>
         <div class="dashboard__bottom">
-          <div class="dashboard__bottom__profile">
-            <div class="profile">
+          <div class="dashboard__bottom__profile" :style="{paddingBottom: paddingBottom}">
+            <div class="profile" ref="profileRef" >
               <div class="profile__info">
                 <div class="profile__avatar">
                   <ion-img src="./assets/images/avatar/user.png" alt="John Doe" />
@@ -23,7 +22,7 @@
                 </div>
               </div>
               <BaLine/>
-              <div class="profile__balance">
+              <div class="profile__balance" >
                 <div class="profile__balance__logo">
                   <p>Available balance</p>
                   <ion-img src="./assets/images/visalogo@2x.png" alt="visa logo" />
@@ -59,15 +58,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import {IonPage, IonContent, IonImg, IonButton} from '@ionic/vue';
+import {defineComponent, ref} from 'vue';
+import {
+  IonPage,
+  IonContent,
+  IonImg,
+  IonButton,
+  onIonViewDidEnter,
+} from '@ionic/vue';
 import BaMoneyOverview from '../components/BaMoneyOverview.vue';
 import SpendingsToday from '../components/SpendingsToday.vue';
 import BaLine from "@/components/BaLine.vue";
 
 export default  defineComponent({
   name: 'Tab1Page',
-  components: {BaLine, IonContent, IonPage, BaMoneyOverview, SpendingsToday, IonImg, IonButton },
+  components: { BaLine, IonContent, IonPage, BaMoneyOverview, SpendingsToday, IonImg, IonButton},
   setup() {
     const spendings = [
       {
@@ -86,13 +91,29 @@ export default  defineComponent({
         id: 2,
       },
     ];
+    const profileRef = ref();
+
+    let paddingBottom = ref("0px");
+    const getRefs = async () => {
+      // Bad practice, but for this example it's fine
+      await new Promise(resolve => setTimeout(resolve, 50));
+      let height = profileRef.value.offsetHeight;
+      paddingBottom.value = `${ height / 2}px`;
+    }
+
+    onIonViewDidEnter(() => {
+      getRefs();
+    });
+
     return {
       spendings,
+      profileRef,
+      paddingBottom
     };
   },
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -100,21 +121,21 @@ export default  defineComponent({
   background: url("../../resources/images/Bank-app__dashboard@2x.png") no-repeat center center;
   background-size: cover;
   min-height: 100%;
-}
-.dashboard__top {
-  height: 276px;
-}
-.dashboard__bottom {
-  flex-grow: 0.66;
-  background-color: #fff;
-  padding-left: 24px;
-  padding-right: 24px;
-}
-.dashboard__bottom__profile {
-  position: relative;
-  padding-bottom: 50%;
-  height: 0;
-  width: 100%;
+  &__top {
+    height: 276px;
+  }
+  &__bottom {
+    flex-grow: 0.66;
+    background-color: #fff;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  &__bottom__profile {
+    position: relative;
+    padding-bottom: 50%;
+    height: 0;
+    width: 100%;
+  }
 }
 .nav {
   height: 48px;
@@ -178,16 +199,16 @@ export default  defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.profile__balance__logo p {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  color: rgba(37, 38, 94, 0.4);
-}
-.profile__balance__logo ion-img {
-  max-width: 52px;
+  p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(37, 38, 94, 0.4);
+  }
+  ion-img {
+    max-width: 52px;
+  }
 }
 .profile__amount {
   font-style: normal;
@@ -202,39 +223,36 @@ export default  defineComponent({
   flex-direction: column;
   justify-content: center;
   margin-left: 16px;
-}
-.profile__user h4 {
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 27px;
-  color: #25265e;
-}
-.profile__user a {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  color: rgba(37, 38, 94, 0.4);
-  text-decoration: none;
+  h4 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 27px;
+    color: #25265e;
+  }
+  a {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(37, 38, 94, 0.4);
+    text-decoration: none;
+  }
 }
 .money-transfers {
   display: flex;
   justify-content: space-between;
   margin-bottom: 48px;
+  margin-top: 20px;
+  &__item {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    border-right: 1px solid #e6e6e6;
+    &.right {
+      align-items: end;
+      border-right: none;
+    }
+  }
 }
-.money-transfers__item {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-}
-
-.money-transfers__item.right {
-  align-items: end;
-}
-
-.money-transfers > div:first-child{
-  border-right: 1px solid #e6e6e6;
-}
-
 </style>
